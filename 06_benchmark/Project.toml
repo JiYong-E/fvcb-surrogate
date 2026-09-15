@@ -1,0 +1,12 @@
+name = "FvCBSurrogateBenchmark"
+authors = ["Jiyong Lee", "Kyungdahm Yun"]
+
+[deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+Cropbox = "a904b226-abf1-11e9-2713-059ba252a964"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+LeafGasExchange = "eed59905-05f1-464e-afba-94c39a4505fd"
+ONNXRunTime = "e034b28e-924e-41b2-b98f-d2bbeb830c6a"
+Parquet2 = "98572fba-bba0-415d-956f-fa77e587d26d"
+Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"

@@ -1,0 +1,8 @@
+role,identifier,seed,rows,note
+training replicate family (rep01),rep01,301,1e3..1e7 nested,"recursive nested Latin hypercube, Qian (2009), 10x refinement"
+training replicate family (rep02),rep02,717,1e3..1e7 nested,"recursive nested Latin hypercube, Qian (2009), 10x refinement"
+training replicate family (rep03),rep03,815,1e3..1e7 nested,"recursive nested Latin hypercube, Qian (2009), 10x refinement"
+training replicate family (rep04),rep04,1003,1e3..1e7 nested,"recursive nested Latin hypercube, Qian (2009), 10x refinement"
+training replicate family (rep05),rep05,1009,1e3..1e7 nested,"recursive nested Latin hypercube, Qian (2009), 10x refinement"
+validation design,validation_n100000,424242,100000,early stopping only
+final test design,test_n1000000_seed1225,1225,1000000,all reported accuracy metrics

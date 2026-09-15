@@ -1,0 +1,11 @@
+name = "FvCBSurrogateFeatures"
+authors = ["Jiyong Lee", "Kyungdahm Yun"]
+
+[deps]
+Cropbox = "a904b226-abf1-11e9-2713-059ba252a964"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+LeafGasExchange = "eed59905-05f1-464e-afba-94c39a4505fd"
+Parquet2 = "98572fba-bba0-415d-956f-fa77e587d26d"
+SHA = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+Tables = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
+Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"

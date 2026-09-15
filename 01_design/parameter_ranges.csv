@@ -1,0 +1,21 @@
+variable,description,min,max,unit
+T_air,Air temperature,-15,45,degrees C
+RH,Relative humidity,5,99,%
+wind,Wind speed,0.1,8.0,m s-1
+PFD,Photosynthetic photon flux density,0,2500,umol m-2 s-1
+CO2,Ambient CO2 concentration,250,1500,umol mol-1
+w,Leaf width,0.3,20.0,cm
+Vcm25,Vcmax at 25 C,15,250,umol m-2 s-1
+Jm25,Jmax at 25 C,30,450,umol m-2 s-1
+Rd25,Dark respiration at 25 C,0.2,5.0,umol m-2 s-1
+Tp25,TPU rate at 25 C,2.0,30.0,umol m-2 s-1
+Gamma25,CO2 compensation point at 25 C,35,55,umol mol-1
+EaVc,Activation energy for Vcmax,40,95,kJ mol-1
+Eaj,Activation energy for Jmax,20,75,kJ mol-1
+Ear,Activation energy for Rd,20,70,kJ mol-1
+EaTp,Activation energy for TPU,20,70,kJ mol-1
+Hj,Deactivation energy for Jmax,150,300,kJ mol-1
+Sj,Entropy term for Jmax,540,720,J mol-1 K-1
+g0,Ball-Berry intercept,0.01,0.05,mol m-2 s-1
+g1,Ball-Berry slope,8,12,dimensionless
+VPD,"Vapor pressure deficit (derived from T_air and RH, not sampled)",,,kPa

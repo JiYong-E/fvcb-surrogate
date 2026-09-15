@@ -1,0 +1,10 @@
+name = "FvCBSurrogateFieldValidation"
+authors = ["Jiyong Lee", "Kyungdahm Yun"]
+
+[deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+Cropbox = "a904b226-abf1-11e9-2713-059ba252a964"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+LeafGasExchange = "eed59905-05f1-464e-afba-94c39a4505fd"
+Optim = "429524aa-4258-5aef-a3af-852621145aeb"
+Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
