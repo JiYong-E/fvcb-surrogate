@@ -6,10 +6,15 @@ Leaf Gas Exchange*.
 Repository: https://github.com/JiYong-E/fvcb-surrogate
 
 Data, trained models and evaluation tables are deposited on Zenodo,
-**doi:10.5281/zenodo.22686734** (CC-BY-4.0). The external Scots pine field record is not
-redistributed by either archive — it is the SMEAR II shoot-chamber dataset of Aalto (2023),
-Zenodo **doi:10.5281/zenodo.10360968**; `05_field_validation/` processes its raw
-`FFluxYYYY.NNN` files.
+**doi:10.5281/zenodo.22686734** (CC-BY-4.0). Two external field records are not redistributed
+by either archive and must be downloaded from their own sources:
+
+- the SMEAR II Scots pine shoot-chamber dataset of Aalto (2023), Zenodo
+  **doi:10.5281/zenodo.10360968** (CC-BY-4.0); `05_field_validation/` processes its raw
+  `FFluxYYYY.NNN` files.
+- the AmeriFlux US-Ton (Tonzi Ranch) half-hourly record, Ma, Xu, Verfaillie and Baldocchi
+  (2026), AmeriFlux AMP, **doi:10.17190/AMF/2204880** (CC-BY-4.0), FLUXNET-1F product;
+  `07_field_forcing/` processes it from the original download.
 
 ## Layout
 
@@ -81,12 +86,12 @@ FVCB_MODELS_ROOT=/path/to/models FVCB_REPS=rep01 python 04_run_all.py
 
 - **Julia** — every Julia-using directory (`01_design/`, `02_features/`, `03_training/`,
   `05_field_validation/`, `06_benchmark/`) has its own pinned `Project.toml` + `Manifest.toml`.
-  `02_features/`, `05_field_validation/` and `06_benchmark/` all pin the same LeafGasExchange.jl
-  and Cropbox commits used for the reference solver (`reference_solver/`);
-  `05_field_validation/` additionally pins **Optim** (for the V_cmax25/J_max25 calibration in
-  `02_fit_reference.jl`), and `06_benchmark/` pins `BenchmarkTools`/`ONNXRunTime`. So
-  `julia --project=.` from any of these five directories is self-contained -- no environment
-  needs to be assembled by hand.
+  `02_features/`, `05_field_validation/`, `06_benchmark/` and `07_field_forcing/` all pin the
+  same LeafGasExchange.jl and Cropbox commits used for the reference solver
+  (`reference_solver/`); `05_field_validation/` additionally pins **Optim** (for the
+  V_cmax25/J_max25 calibration in `02_fit_reference.jl`), and `06_benchmark/` pins
+  `BenchmarkTools`/`ONNXRunTime`. So `julia --project=.` from any of these directories is
+  self-contained -- no environment needs to be assembled by hand.
 - **Python** — `requirements.txt`.
 
 ## Configuration (env vars)
@@ -94,9 +99,14 @@ FVCB_MODELS_ROOT=/path/to/models FVCB_REPS=rep01 python 04_run_all.py
 | var | used by | default |
 |---|---|---|
 | `SMEARII_DIR` | `05_field_validation/` | `./smearii` — the Aalto (2023) FFlux files |
-| `FVCB_MODELS_ROOT` | `04_onnx/`, `03_training/02_evaluate.jl`, `05_field_validation/03_run_surrogate.py` | `03_training/out/Maug` |
+| `AMERIFLUX_DIR` | `07_field_forcing/01_prepare_forcing.py`, `04_thresholds.py` | `./ameriflux` — the US-Ton FLUXNET-1F download |
+| `FVCB_MODELS_ROOT` | `04_onnx/`, `03_training/02_evaluate.jl`, `05_field_validation/03_run_surrogate.py`, `07_field_forcing/{00,03}` | `03_training/out/Maug` |
 | `FVCB_TEST_PATH` | `03_training/02_evaluate.jl` | `03_training/../data/final_test` |
-| `FVCB_REPS` | `03_training/02_evaluate.jl`, `05_field_validation/03_run_surrogate.py` | `rep01,rep02,rep03,rep04,rep05` -- set to `rep01` for Zenodo-only |
+| `FVCB_TEST_DESIGN` | `07_field_forcing/00_build_nmae_table.py` | `07_field_forcing/final_test` |
+| `FVCB_NMAE_TABLE` | `07_field_forcing/04_thresholds.py` | `07_field_forcing/output/per_row_nmae.parquet` |
+| `FVCB_DCJ` | `07_field_forcing/00_build_nmae_table.py` | `0.15` — the D_cj cutoff (Eq. 10) |
+| `FORCING_INPUT` | `07_field_forcing/02_run_reference.jl` | `07_field_forcing/output/uston_2020_2022_input.csv` |
+| `FVCB_REPS` | `03_training/02_evaluate.jl`, `05_field_validation/03_run_surrogate.py`, `07_field_forcing/{00,03}` | `rep01,rep02,rep03,rep04,rep05` -- set to `rep01` for Zenodo-only (`07_field_forcing/00` already defaults to `rep01`) |
 | `ONNX_DIR` | `06_benchmark/` | `./onnx` |
 | `EVAL_PATH` | `06_benchmark/` | `./data/final_test/part-000001.parquet` |
 | `JULIA` / `JULIA_PROJECT` | `05_field_validation/04_run_all.py` | `julia` / `.` (works out of the box now that `05_field_validation/Project.toml` exists) |

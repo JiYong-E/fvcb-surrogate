@@ -17,7 +17,7 @@ import pandas as pd
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parent / "output"
-REPS = ["rep01", "rep02", "rep03", "rep04", "rep05"]
+REPS = None   # discovered from the prediction table's own columns (see main)
 GAP_CAP_S = 3600.0  # a single half-hourly reading stands for at most one hour of a gap
 
 
@@ -33,7 +33,13 @@ def main():
     d = d.sort_values("Date").reset_index(drop=True)
     dt = gapdt(d["Date"])
     month = d["Date"].dt.month.to_numpy()
-    print(f"[summarize] {len(d)} timestamps, {d['Date'].min()} .. {d['Date'].max()}", flush=True)
+    # the deposit carries replicate 1 only, so take whatever replicates 03 actually predicted
+    global REPS
+    REPS = sorted(c.split("_")[-1] for c in d.columns if c.startswith("Anet_rep"))
+    if not REPS:
+        raise SystemExit("no Anet_rep* columns; run 03_run_surrogate.py first")
+    print(f"[summarize] {len(d)} timestamps, {d['Date'].min()} .. {d['Date'].max()}, "
+          f"replicates: {', '.join(REPS)}", flush=True)
 
     # target -> (reference column, unit-conversion factor to mol/kmol m-2)
     targets = {"Anet": ("Anet_ref", 1e-6), "gs": ("gs_ref", 1e-3)}

@@ -9,7 +9,7 @@ Two independent pieces, only one of which needs a model:
   nmae_*        |prediction - reference| / (reference range over the whole design) x 100,
                 per target and per replicate. Needs the M_aug .cbm models.
 
-The regime rule is Eq. 6 of the paper: TPU-limited when Ap is below both Ac and Aj; otherwise
+The regime rule is Eq. 10 of the paper: TPU-limited when Ap is below both Ac and Aj; otherwise
 the A_c/A_j boundary group when the boundary-proximity index D_cj falls below 0.15; otherwise
 whichever of Ac, Aj is smaller. Thresholds other than 0.15 can be set with FVCB_DCJ.
 
@@ -64,7 +64,7 @@ def model_path(rep, target):
 
 
 def classify(ac, aj, ap):
-    """Eq. 6. Returns (regime labels, D_cj). Input-side rates only, never the solved state."""
+    """Eq. 10. Returns (regime labels, D_cj). Input-side rates only, never the solved state."""
     dcj = np.abs(ac - aj) / (np.abs(ac) + np.abs(aj) + EPS)
     regime = np.where(ac < aj, "Ac-limited", "Aj-limited")
     regime = np.where(dcj < DCJ, "Ac/Aj boundary", regime)
@@ -103,7 +103,7 @@ def main():
             m = CatBoostRegressor()
             m.load_model(str(p))
             y = df[refcol].to_numpy(float)
-            rng = y.max() - y.min()          # range over the whole design, as in Eq. 5
+            rng = y.max() - y.min()          # range over the whole design, as in Eq. 9
             out[f"nmae_{target}_{rep}"] = np.abs(m.predict(X) - y) / rng * 100.0
             _log(f"[nmae] {rep} {target:4s}: mean {out[f'nmae_{target}_{rep}'].mean():.4f}%"
                  f"  (reference range {rng:.4g})")
